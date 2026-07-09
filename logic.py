@@ -10,8 +10,8 @@ class MatchingSystem:
         dist_diff = GeoUtils.calculate_distance(drone_lat, drone_lon, target_lat, target_lon)
 
         if sat_detected and uw_detected and dist_diff < 50:
-            return "МУСОР ПОДТВЕРЖДЕН", "#10b981"  # success color
+            return "МУСОР ПОДТВЕРЖДЕН", "#10b981"
         elif sat_detected and not uw_detected:
-            return "ЛОЖНАЯ ТРЕВОГА", "#ef4444"  # danger color
+            return "ЛОЖНАЯ ТРЕВОГА", "#ef4444"
         else:
-            return "НЕОПРЕДЕЛЕННОСТЬ", "#f59e0b"  # warning color
+            return "НЕОПРЕДЕЛЕННОСТЬ", "#f59e0b"
