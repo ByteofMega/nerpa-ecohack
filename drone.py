@@ -3,24 +3,18 @@ import time
 
 
 class DroneController:
-    """
-    Имитация движения АНПА:
-    - погружение на 4 метра,
-    - прямолинейное движение к цели (100 шагов).
-    """
-
-    def __init__(self, start_lat: float, start_lon: float):
+    # имитация движения АНПА: погружение на 4м + прямая к цели за 100 шагов
+    def __init__(self, start_lat, start_lon):
         self.lat = start_lat
         self.lon = start_lon
         self.depth = 0.0
         self.target_lat = None
         self.target_lon = None
         self.is_moving = False
+        self.on_position_update = None
+        self.on_arrival = None
 
-        self.on_position_update = None  # вызывается при каждом шаге
-        self.on_arrival = None          # вызывается по прибытию
-
-    def set_target(self, lat: float, lon: float):
+    def set_target(self, lat, lon):
         self.target_lat = lat
         self.target_lon = lon
 
@@ -31,14 +25,14 @@ class DroneController:
         threading.Thread(target=self._run, daemon=True).start()
 
     def _run(self):
-        # Погружение
+        # погружение
         for i in range(40):
             self.depth = i / 10.0
             if self.on_position_update:
                 self.on_position_update()
             time.sleep(0.05)
 
-        # Движение к цели
+        # движение к цели
         start_lat, start_lon = self.lat, self.lon
         steps = 100
         for step in range(steps + 1):
